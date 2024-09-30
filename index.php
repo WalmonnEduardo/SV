@@ -34,6 +34,9 @@
         .caixa:hover{
             background-image: linear-gradient(0deg, red, blue);
         }
+        .c2{
+            height: 90dvh;
+        }
     </style>
 </head>
 <body>  
@@ -44,33 +47,23 @@
                 <input type="submit" value="Enviar">
             </form>
         </div>
-        <div class="caixa" id="fileContentDiv">
-            <!-- O conteúdo de teste.txt será exibido aqui -->
+        <div class="caixa c2">
+            <?php
+            $arquivo = fopen("teste.txt","r");
+            if ($arquivo)
+            {
+                while (($linha = fgets($arquivo)) !== false)
+                {
+                    echo $linha . "<br>";
+                }
+                fclose($arquivo);
+            }
+            else
+            {
+                echo "Erro ao abrir o arquivo.";
+            }
+            ?>
         </div>
     </div>
-
-    <script>
-        // Função para buscar o conteúdo do arquivo e exibi-lo na div
-        function loadFileContent() {
-            fetch('teste.txt') // Supondo que o arquivo esteja na mesma pasta
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erro ao carregar o arquivo.');
-                    }
-                    return response.text(); // Converte o conteúdo em texto
-                })
-                .then(data => {
-                    // Exibe o conteúdo do arquivo dentro da div
-                    document.getElementById('fileContentDiv').textContent = data;
-                })
-                .catch(error => {
-                    console.error('Erro:', error);
-                    document.getElementById('fileContentDiv').textContent = "Erro ao carregar o arquivo.";
-                });
-        }
-
-        // Chama a função ao carregar a página
-        window.onload = loadFileContent;
-    </script>
 </body>
 </html>
